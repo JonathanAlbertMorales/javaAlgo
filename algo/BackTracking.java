@@ -7,6 +7,10 @@ import java.util.List;
 public class BackTracking {
     List<List<Integer>> res;
 
+    /*
+     * Time complexity: O(n∗2^n)
+     * Space complexity: O(n)
+     */
     public List<List<Integer>> subsets(int[] nums) {
         res = new ArrayList<>();
         List<Integer> subset = new ArrayList<>();
@@ -26,6 +30,11 @@ public class BackTracking {
         dfs(nums, i + 1, subset, res);
     }
 
+    /*
+     * Time complexity: O(2t/m)
+     * Space complexity: O(t/m)
+
+     */
     public List<List<Integer>> combinationSum(int[] nums, int target) {
 
         List<Integer> cur = new ArrayList();
@@ -48,6 +57,10 @@ public class BackTracking {
         backtrack(nums, target, cur, i + 1);
     }
 
+        /*
+     * Time complexity: O(!n)
+     * Space complexity: O(!n)
+     */
     public List<List<Integer>> permute(int[] nums) {
         res = new ArrayList<>();
         backtrack(new ArrayList<>(), nums, new boolean[nums.length]);
@@ -69,6 +82,11 @@ public class BackTracking {
             }
         }
     }
+
+        /*
+     * Time complexity: O(n∗2^n)
+     * Space complexity: O(n)
+     */
 
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);

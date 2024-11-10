@@ -40,7 +40,7 @@ public class SlidingWindow {
         HashMap<Character, Integer> count = new HashMap<>();
         int left = 0;
         for (int i = 0; i < s.length(); i++) {
-            count.put(s.charAt(s.charAt(i)), count.getOrDefault(s.charAt(i), 0) + 1);
+            count.put(s.charAt(i), count.getOrDefault(s.charAt(i), 0) + 1);
             maxf = Math.max(maxf, count.get(s.charAt(i)));
             while(i - left + 1 - maxf > k) {
                 count.put(s.charAt(left), count.get(s.charAt(left)) - 1);

@@ -3,17 +3,23 @@ package algo;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
 public class Graphs {
 
-    
+                /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
     public int numIslands(char[][] grid) {
         int ROWS = grid.length, COLS = grid[0].length;
         int islands = 0;
@@ -47,6 +53,10 @@ public class Graphs {
 
     private int[] size = new int[1];
 
+                /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
     public int maxAreaIsland(char[][] grid) {
         int ROWS = grid.length, COLS = grid[0].length;
         int result = 0;
@@ -65,6 +75,10 @@ public class Graphs {
         return result;
     }
 
+                /*
+     * Time complexity: O(v+e)
+     * Space complexity: O(v)
+     */
      public Node cloneGraph(Node node) {
         Map<Node, Node> oldToNew = new HashMap<>();
 
@@ -95,6 +109,10 @@ public class Graphs {
     private int INF = 2147483647;
     private int ROWS, COLS;
 
+                    /*
+     * Time complexity: O((n*m)^2)
+     * Space complexity: O(n*m)
+     */
     private int bfs(int[][] grid, int r, int c) {
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{r, c});
@@ -134,6 +152,11 @@ public class Graphs {
             }
         }
     }
+
+                    /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
 
      public int orangesRotting(int[][] grid) {
         Queue<int[]> q = new ArrayDeque<>();
@@ -175,6 +198,10 @@ public class Graphs {
         return fresh == 0 ? time : -1;
     }
 
+                    /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
      public List<List<Integer>> pacificAtlantic(int[][] heights) {
         int ROWS = heights.length, COLS = heights[0].length;
         boolean[][] pac = new boolean[ROWS][COLS];
@@ -212,6 +239,10 @@ public class Graphs {
         }
     }
 
+                    /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
     public void solve(char[][] board) {
         ROWS = board.length;
         COLS = board[0].length;
@@ -257,6 +288,10 @@ public class Graphs {
         capture(board, r, c - 1);
     }
 
+                    /*
+     * Time complexity: O(v+e)
+     * Space complexity: O(v+e)
+     */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int[] indegree = new int[numCourses];
         List<List<Integer>> adj = new ArrayList<>();
@@ -290,6 +325,10 @@ public class Graphs {
         return finish == numCourses;
     }
 
+                        /*
+     * Time complexity: O(v+e)
+     * Space complexity: O(v+e)
+     */
     public boolean validTree(int n, int[][] edges) {
         if (edges.length > n - 1) {
             return false;
@@ -329,6 +368,150 @@ public class Graphs {
             }
         }
         return true;
+    }
+
+                        /*
+     * Time complexity: O(n^2logn)
+     * Space complexity: O(n^2)
+     */
+    public int minCostConnectPoints(int[][] points) {
+        int N = points.length;
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+        for (int i = 0; i < N; i++) {
+            int x1 = points[i][0];
+            int y1 = points[i][1];
+            for (int j = i + 1; j < N; j++) {
+                int x2 = points[j][0];
+                int y2 = points[j][1];
+                int dist = Math.abs(x1 - x2) + Math.abs(y1 - y2);
+                adj.computeIfAbsent(i, k -> new ArrayList<>()).add(new int[]{dist, j});
+                adj.computeIfAbsent(j, k -> new ArrayList<>()).add(new int[]{dist, i});
+            }
+        }
+
+        int res = 0;
+        Set<Integer> visit = new HashSet<>();
+        PriorityQueue<int[]> minH = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+        minH.offer(new int[]{0, 0});
+        while (visit.size() < N) {
+            int[] curr = minH.poll();
+            int cost = curr[0];
+            int i = curr[1];
+            if (visit.contains(i)) {
+                continue;
+            }
+            res += cost;
+            visit.add(i);
+            for (int[] nei : adj.getOrDefault(i, Collections.emptyList())) {
+                int neiCost = nei[0];
+                int neiIndex = nei[1];
+                if (!visit.contains(neiIndex)) {
+                    minH.offer(new int[]{neiCost, neiIndex});
+                }
+            }
+        }
+        return res;
+    }
+
+                            /*
+     * Time complexity: O((n+m)n)
+     * Space complexity: O(nk)
+     */
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        int INF = Integer.MAX_VALUE;
+        List<int[]>[] adj = new ArrayList[n];
+        int[][] dist = new int[n][k + 5];
+        for (int i = 0; i < n; i++) Arrays.fill(dist[i], INF);
+        
+        for (int i = 0; i < n; i++) adj[i] = new ArrayList<>();
+        for (int[] flight : flights) {
+            adj[flight[0]].add(new int[]{flight[1], flight[2]});
+        }
+        
+        dist[src][0] = 0;
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>(
+            Comparator.comparingInt(a -> a[0])
+        );
+        minHeap.offer(new int[]{0, src, -1});
+
+        while (!minHeap.isEmpty()) {
+            int[] top = minHeap.poll();
+            int cst = top[0], node = top[1], stops = top[2];
+            if (node == dst) return cst;
+            if (stops == k || dist[node][stops + 1] < cst) continue;
+            for (int[] neighbor : adj[node]) {
+                int nei = neighbor[0], w = neighbor[1];
+                int nextCst = cst + w;
+                int nextStops = stops + 1;
+                if (dist[nei][nextStops + 1] > nextCst) {
+                    dist[nei][nextStops + 1] = nextCst;
+                    minHeap.offer(new int[]{nextCst, nei, nextStops});
+                }
+            }
+        }
+        return -1;
+    }
+
+    
+                            /*
+     * Time complexity: O((n+v+e)
+     * Space complexity: O(v+e)
+     */
+    public String foreignDictionary(String[] words) {
+        Map<Character, Set<Character>> adj = new HashMap<>();
+        Map<Character, Integer> indegree = new HashMap<>();
+        
+        for (String word : words) {
+            for (char c : word.toCharArray()) {
+                adj.putIfAbsent(c, new HashSet<>());
+                indegree.putIfAbsent(c, 0);
+            }
+        }
+
+        for (int i = 0; i < words.length - 1; i++) {
+            String w1 = words[i];
+            String w2 = words[i + 1];
+            int minLen = Math.min(w1.length(), w2.length());
+            if (w1.length() > w2.length() && 
+                w1.substring(0, minLen).equals(w2.substring(0, minLen))) {
+                return "";
+            }
+            for (int j = 0; j < minLen; j++) {
+                if (w1.charAt(j) != w2.charAt(j)) {
+                    if (!adj.get(w1.charAt(j)).contains(w2.charAt(j))) {
+                        adj.get(w1.charAt(j)).add(w2.charAt(j));
+                        indegree.put(w2.charAt(j), 
+                                     indegree.get(w2.charAt(j)) + 1);
+                    }
+                    break;
+                }
+            }
+        }
+
+        Queue<Character> q = new LinkedList<>();
+        for (char c : indegree.keySet()) {
+            if (indegree.get(c) == 0) {
+                q.offer(c);
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        while (!q.isEmpty()) {
+            char char_ = q.poll();
+            res.append(char_);
+            for (char neighbor : adj.get(char_)) {
+                indegree.put(neighbor, indegree.get(neighbor) - 1);
+                if (indegree.get(neighbor) == 0) {
+                    q.offer(neighbor);
+                }
+            }
+        }
+
+        if (res.length() != indegree.size()) {
+            return "";
+        }
+
+        return res.toString();
     }
 }
 

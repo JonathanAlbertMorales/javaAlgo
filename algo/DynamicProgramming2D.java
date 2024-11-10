@@ -7,6 +7,10 @@ import java.util.Map;
 public class DynamicProgramming2D {
     private int[][] memo;
 
+            /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
     public int longestCommonSubsequence(String text1, String text2) {
         memo = new int[text1.length()][text2.length()];
         for (int i = 0; i < text1.length(); i++) {
@@ -33,6 +37,10 @@ public class DynamicProgramming2D {
         return memo[i][j];
     }
     
+            /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
     public int uniquePaths(int m, int n) {
         memo = new int[m][n];
         for(int[] it : memo) {
@@ -56,6 +64,11 @@ public class DynamicProgramming2D {
 
     private Map<String, Integer> dp = new HashMap<>();
     
+            /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
+
     public int maxProfit(int[] prices) {
         return dfs(0, true, prices);
     }
@@ -82,6 +95,10 @@ public class DynamicProgramming2D {
         return dp.get(key);
     }
 
+            /*
+     * Time complexity: O(n*a)
+     * Space complexity: O(n*a)
+     */
     public int change(int amount, int[] coins) {
         Arrays.sort(coins);
          
@@ -111,6 +128,10 @@ public class DynamicProgramming2D {
     private int[][] dpA;
     private int totalSum;
 
+            /*
+     * Time complexity: O(n*t)
+     * Space complexity: O(n*t)
+     */
     public int findTargetSumWays(int[] nums, int target) {
         totalSum = 0;
         for (int num : nums) totalSum += num;
@@ -137,6 +158,11 @@ public class DynamicProgramming2D {
 
     private Boolean[][] dpBool;
 
+            /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
+
     public boolean isInterleave(String s1, String s2, String s3) {
         int m = s1.length(), n = s2.length();
         if (m + n != s3.length()) return false;
@@ -162,5 +188,36 @@ public class DynamicProgramming2D {
 
         dpBool[i][j] = res;
         return res;
+    }
+
+                /*
+     * Time complexity: O(n*m)
+     * Space complexity: O(n*m)
+     */
+    public int minDistance(String word1, String word2) {
+        int m = word1.length(), n = word2.length();
+        dpA = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                dpA[i][j] = -1;
+            }
+        }
+        return dfs(0, 0, word1, word2, m, n);
+    }
+
+    private int dfs(int i, int j, String word1, String word2, int m, int n) {
+        if (i == m) return n - j;
+        if (j == n) return m - i;
+        if (dpA[i][j] != -1) return dpA[i][j];
+
+        if (word1.charAt(i) == word2.charAt(j)) {
+            dpA[i][j] = dfs(i + 1, j + 1, word1, word2, m, n);
+        } else {
+            int res = Math.min(dfs(i + 1, j, word1, word2, m, n), 
+                            dfs(i, j + 1, word1, word2, m, n));
+            res = Math.min(res, dfs(i + 1, j + 1, word1, word2, m, n));
+            dpA[i][j] = res + 1;
+        }
+        return dpA[i][j];
     }
 }

@@ -7,6 +7,10 @@ import java.util.Map;
 
 public class DynamicProgramming1D {
     int[] cache;
+             /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public int climbStairs(int n) {
         cache = new int[n];
         for (int i = 0; i < n; i++) {
@@ -23,6 +27,10 @@ public class DynamicProgramming1D {
 
     private int[] memo;
 
+             /*
+     * Time complexity: O(n)
+     * Space complexity: O(t)
+     */
     public int rob(int[] nums) {
         memo = new int[nums.length];
         Arrays.fill(memo, -1);
@@ -42,7 +50,10 @@ public class DynamicProgramming1D {
     }
 
     private int[][] memo2;
-    
+             /*
+     * Time complexity: O(n*t)
+     * Space complexity: O(t)
+     */
     public int rob2(int[] nums) {
         if (nums.length == 1) return nums[0];
         
@@ -65,6 +76,10 @@ public class DynamicProgramming1D {
         return memo2[i][flag];
     }
 
+             /*
+     * Time complexity: O(n^2)
+     * Space complexity: O(n^2)
+     */
     public String longestPalindrome(String s) {
         int resIdx = 0, resLen = 0;
         int n = s.length();
@@ -88,6 +103,10 @@ public class DynamicProgramming1D {
         return s.substring(resIdx, resIdx + resLen);
     }
 
+      /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public int numDecodings(String s) {
         Map<Integer, Integer> dp = new HashMap<>();
         dp.put(s.length(), 1);
@@ -112,6 +131,10 @@ public class DynamicProgramming1D {
         return res;
     }
 
+          /*
+     * Time complexity: O(n*t)
+     * Space complexity: O(t)
+     */
     public int dfsCoins(int[] coins, int amount) {
         if (amount == 0) return 0;
         if (memo[amount] != -1) return memo[amount];
@@ -136,6 +159,10 @@ public class DynamicProgramming1D {
         return (minCoins >= 1e9) ? -1 : minCoins;
     }
 
+             /*
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
     public int maxProduct(int[] nums) {
         int res = nums[0];
         int curMin = 1, curMax = 1;
@@ -151,6 +178,10 @@ public class DynamicProgramming1D {
 
      private Map<Integer, Boolean> memoMap;
 
+              /*
+     * Time complexity: O((t^2*n) + m)
+     * Space complexity: O(n + (m*t))
+     */
     public boolean wordBreak(String s, List<String> wordDict) {
         memoMap = new HashMap<>();
         memoMap.put(s.length(), true);
@@ -175,6 +206,10 @@ public class DynamicProgramming1D {
         return false;
     }
 
+       /*
+     * Time complexity: O(n^2)
+     * Space complexity: O(n^2)
+     */
     private int dfsLIS(int i, int j, int[] nums) {
         if (i == nums.length) {
             return 0;
@@ -203,6 +238,12 @@ public class DynamicProgramming1D {
     }
 
     Boolean[][] memoBool;
+
+       /*
+     * Time complexity: O(n * target)
+     * Space complexity: O(n* target)
+     */
+
     public boolean canPartition(int[] nums) {
         int n = nums.length;
         int sum = 0;

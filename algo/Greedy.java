@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Greedy {
+            /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public int maxSubArray(int[] nums) {
         int maxSub = nums[0], curSum = 0;
         for (int num : nums) {
@@ -19,6 +23,10 @@ public class Greedy {
         return maxSub;
     }
 
+        /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public boolean canJump(int[] nums) {
         Map<Integer, Boolean> memo = new HashMap<>();
         return dfs(nums, 0, memo);
@@ -46,6 +54,10 @@ public class Greedy {
         return false;
     }
 
+            /*
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
     public int canCompleteCircuit(int[] gas, int[] cost) {
         if (Arrays.stream(gas).sum() < Arrays.stream(cost).sum()) {
             return -1;
@@ -65,6 +77,10 @@ public class Greedy {
         return res;
     }
 
+            /*
+     * Time complexity: O(nlogn)
+     * Space complexity: O(nlogn)
+     */
     public boolean isNStraightHand(int[] hand, int groupSize) {
         if (hand.length % groupSize != 0) return false;
         Map<Integer, Integer> count = new HashMap<>();
@@ -88,6 +104,10 @@ public class Greedy {
         return true;
     }
 
+            /*
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
     public boolean checkValidString(String s) {
         int leftMin = 0, leftMax = 0;
 
