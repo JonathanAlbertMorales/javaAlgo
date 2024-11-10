@@ -79,7 +79,10 @@ public class Trees {
         return isSubtree(root.left, subRoot) || 
                isSubtree(root.right, subRoot);
     }
-    
+                     /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
@@ -91,6 +94,10 @@ public class Trees {
         }
     }
 
+                     /*
+     * Time complexity: O(h)
+     * Space complexity: O(1)
+     */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || p == null || q == null) {
             return null;
@@ -127,6 +134,10 @@ public class Trees {
         }
         return res;
     }
+                     /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
 
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -152,6 +163,10 @@ public class Trees {
         return res;
     }
 
+                 /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public int goodNodes(TreeNode root) {
         return dfs(root, root.val);
     }
@@ -168,6 +183,10 @@ public class Trees {
         return res;
     }
 
+                     /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public boolean isValidBST(TreeNode root) {
         return valid(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
@@ -183,6 +202,10 @@ public class Trees {
                valid(node.right, node.val, right);
     }
 
+                     /*
+     * Time complexity: O(n)
+     * Space complexity: O(n)
+     */
     public int kthSmallest(TreeNode root, int k) {
         int[] tmp = new int[2];
         tmp[0] = k;
