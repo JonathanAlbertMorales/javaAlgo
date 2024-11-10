@@ -13,9 +13,7 @@ public class DynamicProgramming1D {
      */
     public int climbStairs(int n) {
         cache = new int[n];
-        for (int i = 0; i < n; i++) {
-            cache[i] = -1;
-        }
+        Arrays.fill(cache, -1);
         return dfs(n, 0); 
     }
 
@@ -32,48 +30,25 @@ public class DynamicProgramming1D {
      * Space complexity: O(t)
      */
     public int rob(int[] nums) {
-        memo = new int[nums.length];
-        Arrays.fill(memo, -1);
-        return dfs(nums, 0);
-    }
+        int rob1 = 0, rob2 = 0;
 
-    private int dfs(int[] nums, int i) {
-        if (i >= nums.length) {
-            return 0;
+        for (int num : nums) {
+            int temp = Math.max(num + rob1, rob2);
+            rob1 = rob2;
+            rob2 = temp;
         }
-        if (memo[i] != -1) {
-            return memo[i];
-        }
-        memo[i] = Math.max(dfs(nums, i + 1), 
-                         nums[i] + dfs(nums, i + 2));
-        return memo[i];
+        return rob2;
     }
 
     private int[][] memo2;
              /*
-     * Time complexity: O(n*t)
+     * Time complexity: O(n)
      * Space complexity: O(t)
      */
     public int rob2(int[] nums) {
-        if (nums.length == 1) return nums[0];
-        
-        memo2 = new int[nums.length][2];
-        for (int i = 0; i < nums.length; i++) {
-            memo2[i][0] = -1;
-            memo2[i][1] = -1;
-        }
-        
-        return Math.max(dfs(0, 1, nums), dfs(1, 0, nums));
-    }
-    
-    private int dfs(int i, int flag, int[] nums) {
-        if (i >= nums.length || (flag == 1 && i == nums.length - 1)) 
-            return 0;
-        if (memo2[i][flag] != -1)
-            return memo2[i][flag];
-            memo2[i][flag] = Math.max(dfs(i + 1, flag, nums), 
-                        nums[i] + dfs(i + 2, flag | (i == 0 ? 1 : 0), nums));
-        return memo2[i][flag];
+        return Math.max(nums[0], 
+               Math.max(rob(Arrays.copyOfRange(nums, 1, nums.length)), 
+               rob(Arrays.copyOfRange(nums, 0, nums.length - 1))));
     }
 
              /*

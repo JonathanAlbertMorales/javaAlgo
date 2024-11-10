@@ -106,6 +106,11 @@ public class BackTracking {
         }
     }
 
+           /*
+     * Time complexity: O(n∗2^n)
+     * Space complexity: O(n)
+     */
+
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         res = new ArrayList<>();
         Arrays.sort(candidates);
@@ -135,6 +140,11 @@ public class BackTracking {
     private int ROWS, COLS;
     private boolean[][] visited;
 
+    
+       /*
+     * Time complexity: O(n∗4^n)
+     * Space complexity: O(n)
+     */
     public boolean exist(char[][] board, String word) {
         ROWS = board.length;
         COLS = board[0].length;
@@ -170,6 +180,10 @@ public class BackTracking {
         return res;
     }
 
+       /*
+     * Time complexity: O(n∗4^n)
+     * Space complexity: O(n)
+     */
     private List<String> resS = new ArrayList<>();
     private String[] digitToChar = {
         "", "", "abc", "def", "ghi", "jkl", "mno", "qprs", "tuv", "wxyz"
